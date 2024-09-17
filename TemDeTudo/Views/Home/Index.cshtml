@@ -1,8 +1,16 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿
+@{
+    int x = 4 + 5;
+    ViewData["Resultado"] = x;
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
+    <p> O Resultado é: 
+        @ViewData["Resultado"]
+    </p>
+    <p> 
+        E-mail: @ViewData["email"]
+    </p>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
