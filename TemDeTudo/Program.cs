@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using TemDeTudo.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<TemDeTudoContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TemDeTudoContext") ?? throw new InvalidOperationException("Connection string 'TemDeTudoContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
