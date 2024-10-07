@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using TemDeTudo.Data;
 using TemDeTudo.Models;
+using TemDeTudo.Models.ViewModels;
 
 namespace TemDeTudo.Controllers
 {
@@ -21,8 +22,14 @@ namespace TemDeTudo.Controllers
             return View(sellers);
         }
 
-        public IActionResult Create() { 
-            return View();
+        public IActionResult Create() {
+            //Instanciar um SellerFormViewModel
+            //Essa instância vai ter 2 propriedades
+            //um vendedor e uma lista de departmamentos
+            var viewModel = new SellerFormViewModel();
+            //carregando os departamentos do banco
+            viewModel.Departments = _context.Department.ToList();
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -33,9 +40,8 @@ namespace TemDeTudo.Controllers
                 //Retorna página não encontrada
                 return NotFound();
             }
-
-            seller.Department = _context.Department.FirstOrDefault();
-            seller.DepartmentId = seller.Department.Id;
+            //seller.Department = _context.Department.FirstOrDefault();
+            //seller.DepartmentId = seller.Department.Id;
 
             //Adicionar o objeto vendedor ao banco
             _context.Add(seller);
