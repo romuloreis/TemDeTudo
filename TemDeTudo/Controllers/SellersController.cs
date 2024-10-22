@@ -36,7 +36,7 @@ namespace TemDeTudo.Controllers
         public IActionResult Create(Seller seller) {
 
             //Testa se foi passado um vendedor
-            if (seller == null) { 
+            if (seller == null) {
                 //Retorna página não encontrada
                 return NotFound();
             }
@@ -50,5 +50,85 @@ namespace TemDeTudo.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public IActionResult Details(int? id)
+        {
+            //Veifica se foi passado um id como parâmetro
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Seller seller = _context.Seller.Include("Department").FirstOrDefault(x => x.Id == id);
+
+            //Se não localizou um vendedor com esse ID, vai para página de erro
+            if (seller == null)
+            {
+                return NotFound();
+            }
+
+            return View(seller);
+        }
+
+        public IActionResult Delete(int? id) {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Seller seller = _context.Seller
+                .Include("Department")
+                .FirstOrDefault(s => s.Id == id);
+
+            if (seller == null) {
+                return NotFound();
+            }
+            return View(seller);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id) {
+            Seller seller = _context.Seller
+                .FirstOrDefault(s => s.Id == id);
+
+            if (seller == null)
+            {
+                return NotFound();
+            }
+
+            _context.Remove(seller);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Edit(int id)
+        {
+            //Verificar se existe um vendedor com o id passado por parâmetro
+            var seller = _context.Seller.First(s => s.Id == id);
+
+            if (seller == null)
+            {
+                return NotFound();
+            }
+
+            //Cria uma lista de departamentos
+            List<Department> departments = _context.Department.ToList();
+
+            //Cria uma instância do viewmodel
+            SellerFormViewModel viewModel = new SellerFormViewModel();
+            viewModel.Seller = seller;
+            viewModel.Departments = departments;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Seller seller) {
+            //_context.Seller.Update(seller);
+            _context.Update(seller);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
     }
 }
