@@ -19,7 +19,17 @@ namespace TemDeTudo.Controllers
         public IActionResult Index() {
             //List<Seller> sellers = _context.Seller.ToList();
             var sellers = _context.Seller.Include("Department").ToList();
-            return View(sellers);
+
+            //Filtra os vendedores que ganham menos de 10k
+            var trainees = sellers.Where(s => s.Salary <= 10000);
+
+            //Filtra a lista e ordena em ordem CRESCENTE
+            //por nome e depois por salario
+            var SellersAscNameSalary = 
+                sellers.OrderBy(s => s.Name)
+                .ThenBy(s => s.Salary);
+
+            return View(SellersAscNameSalary);
         }
 
         public IActionResult Create() {
@@ -128,6 +138,26 @@ namespace TemDeTudo.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Report() { 
+            //Popular a lista de objetos vendedores,
+            //trazendo as informações
+            //do departamento de cada vendedor
+            //List<Seller> sellers
+            var sellers = _context.Seller.Include("Department").ToList();
+
+            ViewData["TotalFolhaPagamento"] = sellers.Sum(s => s.Salary);
+
+            ViewData["Maior"] = sellers.Max(s => s.Salary);
+
+            ViewData["Menor"] = sellers.Min(s => s.Salary);
+
+            ViewData["Media"] = sellers.Average(s => s.Salary);
+
+            ViewData["Ricos"] = sellers.Count(s => s.Salary >= 30000);
+
+            return View();
         }
 
     }

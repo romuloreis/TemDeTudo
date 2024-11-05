@@ -1,0 +1,23 @@
+﻿@*
+    Exemplo de comentário no CSHTML
+*@
+
+<h1>Information Report</h1>
+
+<h3>
+    Total da folha de pagamento <br>
+    (Soma dos salários dos vendedores): 
+</h3>
+<p>R$ @ViewData["TotalFolhaPagamento"]</p>
+
+<h3>Maior Salário da Empresa: </h3>
+<p>R$ @ViewData["Maior"]</p>
+
+<h3>Menor Salário da Empresa: </h3>
+<p>R$ @ViewData["Menor"]</p>
+
+<h3>Média de Salário da Empresa: </h3>
+<p>R$ @ViewData["Media"]</p> 
+
+<h3>Quantidade de ricos Empresa: </h3>
+<p>@ViewData["Ricos"]</p> 
