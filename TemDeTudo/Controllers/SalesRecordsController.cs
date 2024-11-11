@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TemDeTudo.Data;
@@ -155,14 +151,14 @@ namespace TemDeTudo.Controllers
             {
                 _context.SalesRecord.Remove(salesRecord);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool SalesRecordExists(int id)
         {
-          return (_context.SalesRecord?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.SalesRecord?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

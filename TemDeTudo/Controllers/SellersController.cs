@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TemDeTudo.Data;
 using TemDeTudo.Models;
@@ -12,11 +10,13 @@ namespace TemDeTudo.Controllers
     {
         private readonly TemDeTudoContext _context;
 
-        public SellersController(TemDeTudoContext context) {
+        public SellersController(TemDeTudoContext context)
+        {
             _context = context;
         }
 
-        public IActionResult Index() {
+        public IActionResult Index()
+        {
             //List<Seller> sellers = _context.Seller.ToList();
             var sellers = _context.Seller.Include("Department").ToList();
 
@@ -25,14 +25,15 @@ namespace TemDeTudo.Controllers
 
             //Filtra a lista e ordena em ordem CRESCENTE
             //por nome e depois por salario
-            var SellersAscNameSalary = 
+            var SellersAscNameSalary =
                 sellers.OrderBy(s => s.Name)
                 .ThenBy(s => s.Salary);
 
             return View(SellersAscNameSalary);
         }
 
-        public IActionResult Create() {
+        public IActionResult Create()
+        {
             //Instanciar um SellerFormViewModel
             //Essa instância vai ter 2 propriedades
             //um vendedor e uma lista de departmamentos
@@ -43,10 +44,12 @@ namespace TemDeTudo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Seller seller) {
+        public IActionResult Create(Seller seller)
+        {
 
             //Testa se foi passado um vendedor
-            if (seller == null) {
+            if (seller == null)
+            {
                 //Retorna página não encontrada
                 return NotFound();
             }
@@ -80,7 +83,8 @@ namespace TemDeTudo.Controllers
             return View(seller);
         }
 
-        public IActionResult Delete(int? id) {
+        public IActionResult Delete(int? id)
+        {
             if (id == null)
             {
                 return NotFound();
@@ -89,14 +93,16 @@ namespace TemDeTudo.Controllers
                 .Include("Department")
                 .FirstOrDefault(s => s.Id == id);
 
-            if (seller == null) {
+            if (seller == null)
+            {
                 return NotFound();
             }
             return View(seller);
         }
 
         [HttpPost]
-        public IActionResult Delete(int id) {
+        public IActionResult Delete(int id)
+        {
             Seller seller = _context.Seller
                 .FirstOrDefault(s => s.Id == id);
 
@@ -132,7 +138,8 @@ namespace TemDeTudo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Seller seller) {
+        public IActionResult Edit(Seller seller)
+        {
             //_context.Seller.Update(seller);
             _context.Update(seller);
             _context.SaveChanges();
@@ -140,7 +147,8 @@ namespace TemDeTudo.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Report() { 
+        public IActionResult Report()
+        {
             //Popular a lista de objetos vendedores,
             //trazendo as informações
             //do departamento de cada vendedor

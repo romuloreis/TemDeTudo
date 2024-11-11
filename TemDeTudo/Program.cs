@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using TemDeTudo.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TemDeTudoContext>(options =>
