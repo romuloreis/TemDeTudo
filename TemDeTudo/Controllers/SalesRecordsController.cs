@@ -55,14 +55,9 @@ namespace TemDeTudo.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Date,Price,Status,SellerId")] SalesRecord salesRecord)
         {
-            if (ModelState.IsValid)
-            {
                 _context.Add(salesRecord);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["SellerId"] = new SelectList(_context.Seller, "Id", "Name", salesRecord.SellerId);
-            return View(salesRecord);
         }
 
         // GET: SalesRecords/Edit/5
@@ -94,8 +89,7 @@ namespace TemDeTudo.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+
                 try
                 {
                     _context.Update(salesRecord);
@@ -113,9 +107,7 @@ namespace TemDeTudo.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["SellerId"] = new SelectList(_context.Seller, "Id", "Name", salesRecord.SellerId);
-            return View(salesRecord);
+
         }
 
         // GET: SalesRecords/Delete/5

@@ -165,6 +165,10 @@ namespace TemDeTudo.Controllers
 
             ViewData["Ricos"] = sellers.Count(s => s.Salary >= 30000);
 
+            var firstOneList = _context.Seller.FromSqlRaw("Select * FROM Seller WHERE Id = 1").ToList();
+
+            ViewData["info"] = firstOneList.Where(sr => sr.Id==1).Select(s => s.Name);
+
             return View();
         }
 

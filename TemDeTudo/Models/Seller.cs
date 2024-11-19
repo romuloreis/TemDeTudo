@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace TemDeTudo.Models
 {
@@ -18,11 +19,18 @@ namespace TemDeTudo.Models
         [Range(1400, 50000, ErrorMessage = "Fora do valor limite")]
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:F2}")]
-        public Decimal Salary { get; set; }
+        public double Salary { get; set; }
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
 
         public List<SalesRecord> Sales { get; set; }
             = new List<SalesRecord>();
+
+        public double TotalSales(
+            DateTime initial, DateTime final) {
+            return Sales.Where(
+                sr => sr.Date >= initial &&
+                sr.Date <= final).Sum(sr => sr.Price);
+        }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TemDeTudo.Data;
 
@@ -11,9 +12,10 @@ using TemDeTudo.Data;
 namespace TemDeTudo.Migrations
 {
     [DbContext(typeof(TemDeTudoContext))]
-    partial class TemDeTudoContextModelSnapshot : ModelSnapshot
+    [Migration("20241118233146_SellerSalary")]
+    partial class SellerSalary
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
